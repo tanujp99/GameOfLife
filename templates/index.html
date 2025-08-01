@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conway's Game of Life</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Conway's Game of Life</h1>
+            <p>A cellular automaton simulation built with Go and HTMX</p>
+        </header>
+
+        <div class="controls">
+            <button class="btn btn-primary" 
+                    id="step-btn"
+                    hx-post="/api/step" 
+                    hx-target="#grid" 
+                    hx-swap="innerHTML">
+                Step
+            </button>
+            
+            <div id="auto-controls">
+                <button class="btn btn-success" 
+                        id="auto-toggle"
+                        hx-post="/api/toggle-auto"
+                        hx-target="#auto-controls"
+                        hx-swap="innerHTML">
+                    Auto Start
+                </button>
+            </div>
+            
+            <button class="btn btn-info" 
+                    id="random-btn"
+                    hx-post="/api/random" 
+                    hx-target="#grid" 
+                    hx-swap="innerHTML">
+                Random
+            </button>
+            
+            <button class="btn btn-danger" 
+                    id="clear-btn"
+                    hx-post="/api/clear" 
+                    hx-target="#grid" 
+                    hx-swap="innerHTML">
+                Clear
+            </button>
+        </div>
+
+        <div class="game-info">
+            <div id="status" hx-get="/api/status" hx-trigger="load, htmx:afterRequest from:#auto-controls, htmx:afterRequest from:#clear-btn, htmx:afterRequest from:#random-btn">
+                <span class="status-text">Status: Stopped</span>
+            </div>
+            <div class="step-counter">
+                Step: <span id="step-count" 
+                           hx-get="/api/step-count" 
+                           hx-trigger="load, htmx:afterRequest from:#step-btn, htmx:afterRequest from:#random-btn, htmx:afterRequest from:#clear-btn, htmx:afterRequest from:#auto-step">0</span>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div id="grid" class="grid">
+                {{range $y, $row := .Grid}}
+                    {{range $x, $cell := $row}}
+                        <div class="cell{{if $cell.Alive}} alive{{end}}" 
+                             hx-post="/api/toggle" 
+                             hx-vals='{"x":{{$x}},"y":{{$y}}}' 
+                             hx-target="this" 
+                             hx-swap="outerHTML">
+                        </div>
+                    {{end}}
+                {{end}}
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Play:</h3>
+            <ul>
+                <li><strong>Click any cell</strong> to toggle it alive/dead</li>
+                <li><strong>Step</strong> - Advance one generation</li>
+                <li><strong>Start Auto</strong> - Begin automatic simulation</li>
+                <li><strong>Stop Auto</strong> - Pause automatic simulation</li>
+                <li><strong>Random</strong> - Generate random pattern</li>
+                <li><strong>Clear</strong> - Clear the grid</li>
+            </ul>
+            
+            <h3>Rules:</h3>
+            <ul>
+                <li>A live cell with 2 or 3 neighbors survives</li>
+                <li>A dead cell with exactly 3 neighbors becomes alive</li>
+                <li>All other cells die or stay dead</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="auto-step" 
+         hx-post="/api/auto-step" 
+         hx-trigger="every 200ms[document.querySelector('#status .status-text').textContent.includes('Running')]" 
+         hx-target="#grid" 
+         hx-swap="innerHTML">
+    </div>
+
+</body>
+</html>

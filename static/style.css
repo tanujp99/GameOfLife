@@ -1,0 +1,296 @@
+:root {
+  --foreground: #fafafd;
+  --background: #2c2f3e;
+  --card-bg: #3a3f53;
+  --border-color: #5f647855;
+  --button-bg: #5f6478;
+  --accent: #FF90E8;
+  --shadow-card: -10px -10px 30px 0 #454a62, 10px 10px 30px 0 #0f121b;
+  --shadow-panel: 
+    -3px -3px 6px 0 #454a62a5,
+    3px 3px 6px 0 #0f121b40,
+    inset -3px -3px 6px 0 #0f121b40,
+    inset 3px 3px 6px 0 #454a62;
+  --shadow-navbar: 
+    inset 0 3px 6px #00000393, 
+    inset 0 -2px 4px #00000330,
+    0 -2px 1.5px #00000329,
+    0 2px 1.5px #fcfcff42;
+  --shadow-pill: 
+    0 2px 10px #00000339, 0 2px 8px #0000035c,
+    inset 0 2px 1px #fcfcff42,
+    inset 0 -2px 1px #0000036f;
+  --shadow-button: 0 1px 3px 0 #0000034d, 0 1px 2px 0 #00000333;
+  --shadow-hover: 0 4px 6px -1px #0000034d, 0 2px 4px -1px #00000333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    scroll-behavior: smooth;
+    height: 100%;
+    /* overflow-x: hidden; */
+    -webkit-text-size-adjust: 90%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    min-height: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--foreground);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: var(--accent);
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    background: var(--button-bg);
+    color: var(--foreground);
+    box-shadow: var(--shadow-pill);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    background: var(--card-bg);
+}
+
+.btn-primary {
+    background: var(--button-bg);
+    color: var(--foreground);
+}
+
+.btn-primary:hover {
+    background: var(--card-bg);
+}
+
+.btn-success {
+    background: var(--button-bg);
+    color: var(--foreground);
+}
+
+.btn-success:hover {
+    background: var(--card-bg);
+}
+
+.btn-warning {
+    background: var(--button-bg);
+    color: var(--foreground);
+}
+
+.btn-warning:hover {
+    background: var(--card-bg);
+}
+
+.btn-info {
+    background: var(--button-bg);
+    color: var(--foreground);
+}
+
+.btn-info:hover {
+    background: var(--card-bg);
+}
+
+.btn-danger {
+    background: var(--button-bg);
+    color: var(--foreground);
+}
+
+.btn-danger:hover {
+    background: var(--card-bg);
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 10px;
+    color: var(--foreground);
+    box-shadow: var(--shadow-navbar);
+}
+
+.status-text {
+    font-weight: 600;
+}
+
+.step-counter {
+    font-weight: 600;
+}
+
+.grid-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    overflow: auto;
+    max-width: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(50, 16px);
+    grid-template-rows: repeat(30, 16px);
+    gap: 1px;
+    background: var(--card-bg);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-panel);
+}
+
+.cell {
+    width: 16px;
+    height: 16px;
+    background: var(--background);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-color);
+}
+
+.cell:hover {
+    background: var(--card-bg);
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(255, 144, 232, 0.3);
+}
+
+.cell.alive {
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(255, 144, 232, 0.6);
+    border: 1px solid var(--accent);
+}
+
+.cell.alive:hover {
+    background: #ff6edf;
+    box-shadow: 0 0 12px rgba(255, 144, 232, 0.8);
+}
+
+.instructions {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--foreground);
+}
+
+.instructions h3 {
+    color: var(--accent);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.instructions ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.instructions strong {
+    color: var(--accent);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff6edf;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .controls {
+        gap: 10px;
+    }
+    
+    .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .container { padding: 10px; }
+    header h1 { font-size: 2rem; }
+    .controls { gap: 10px; }
+    .btn { padding: 10px 16px; font-size: 0.9rem; }
+    .game-info { flex-direction: column; gap: 10px; text-align: center; }
+  }
+  
+  @media (max-width: 480px) {
+    .controls { flex-direction: column; align-items: center; }
+    .btn { width: 200px; }
+  }
