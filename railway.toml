@@ -1,0 +1,9 @@
+ld]
+builder = "dockerfile"
+
+[deploy]
+startCommand = "./main"
+restartPolicyType = "on_failure"
+
+[env]
+PORT = "8080"
