@@ -1,7 +1,7 @@
 # Use official Go image
 FROM golang:1.21-alpine AS builder
 
-Set working directory
+# Set working directory
 WORKDIR /app
 
 # Copy go mod files
