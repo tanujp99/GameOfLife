@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -65,8 +66,17 @@ func main() {
 	r.HandleFunc("GET", "/api/step-count", stepCountHandler)
 	r.HandleFunc("GET", "/api/status", statusHandler)
 
-	fmt.Println("Server starting on http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	// Local Config
+	// fmt.Println("Server starting on http://localhost:8080")
+	// log.Fatal(http.ListenAndServe(":8080", r))
+
+	// Remote Server Config
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	fmt.Printf("Server starting on port %s\n", port)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
