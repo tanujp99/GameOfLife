@@ -1,4 +1,4 @@
-ld]
+[build]
 builder = "dockerfile"
 
 [deploy]
